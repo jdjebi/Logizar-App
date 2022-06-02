@@ -20,7 +20,7 @@
 
             <div class="flex">
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('create_project')">
+                    <x-jet-nav-link href="{{ route('project_create') }}" :active="request()->routeIs('create_project')">
                         {{ __('Nouveau projet') }}
                     </x-jet-nav-link>
                 </div>
