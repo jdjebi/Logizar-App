@@ -22,6 +22,12 @@
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
+
+            <!-- Extras styles -->
+            @if (isset($extras_css))
+                {{ $extras_css }}
+            @endif
+
             @livewire('navigation-menu')
 
             <!-- Page Heading -->

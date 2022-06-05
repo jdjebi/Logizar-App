@@ -5,16 +5,12 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="text-center">
-            <div class="font-semibold text-lg">
-                <div>
-                    Aucun projet pour l'instant ? Exprimez vos idées librement !
-                </div>
-                <div>
-                    Exprimez vos idées librement ! Car l'expression est le pourquoi de l'existence de Logizar.
-                </div>
-            </div>
+    <div>
+        <div class="py-4 px-5">
+            <h2 class="font-bold">Mes projets</h2>
+        </div>
+        <div class="bg-white border-gray-600 py-1 px-5">
+            @livewire('project-user-list-simple-box',["user" => Auth::user()])
         </div>
     </div>
 </x-app-layout>

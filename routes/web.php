@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $projects = Project::orderByDesc("created_at")->get();
+
+    return view('welcome',[
+        "projects" => $projects
+    ]);
+
+
 })->name('index');
 
 Route::middleware([
@@ -24,11 +32,12 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', function () {
+
         return view('dashboard');
+
     })->name('dashboard');
 
-    Route::get('/new/project',function(){
-        return view('project.project_create');
-    })->name('project_create');
-    
+    Route::get('/project/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
+    Route::post('/project/new', 'App\Http\Controllers\ProjectController@store');
+
 });
