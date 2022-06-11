@@ -14,12 +14,10 @@ class CreateConfigsTable extends Migration
     public function up()
     {
         Schema::create('configs', function (Blueprint $table) {
-            Schema::create('configs', function (Blueprint $table) {
-                $table->id();
-                $table->string("name");
-                $table->string("value");
-                $table->timestamps();
-            });
+            $table->id();
+            $table->string("name");
+            $table->string("value");
+            $table->timestamps();
         });
     }
 
