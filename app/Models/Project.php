@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+
+    protected $dates = ['created_at'];
+
     protected $fillable = [
         'name',
         'description',

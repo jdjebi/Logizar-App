@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class ProjectSimpleBox extends Component
+class ProjectSimpleBox2 extends Component
 {
     public $project;
     public $name;
@@ -21,6 +21,6 @@ class ProjectSimpleBox extends Component
 
     public function render()
     {
-        return view('livewire.project-simple-box');
+        return view('livewire.project-simple-box2');
     }
 }

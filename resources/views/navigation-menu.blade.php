@@ -8,16 +8,22 @@
                         <div>
                             <span class="font-bold text-md">Logizar Community</span>
                         </div>
-                        @guest
-                        <div>
-                            <span class="text-xs">Rejoingnez la Bizar Community</span>
-                        </div>
-                        @endguest
+                        @if(false)
+                            @guest
+                                <div>
+                                    <span class="text-xs">Rejoingnez la Bizar Community</span>
+                                </div>
+                            @endguest
+                        @endif
                     </a>
                 </div>
 
                 @auth
+
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                        {{ __('Projets') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Tabeau de bord') }}
                     </x-jet-nav-link>
