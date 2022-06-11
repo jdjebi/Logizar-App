@@ -18,6 +18,11 @@ class ProjectController extends Controller
 
         // Validation
 
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+            'description' => 'required'
+        ]);
+
         $project = new Project;
 
         $project->name = $request->name;
