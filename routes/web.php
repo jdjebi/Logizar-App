@@ -3,17 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Project;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
 
     $projects = Project::orderByDesc("created_at")->get();
@@ -24,6 +13,8 @@ Route::get('/', function () {
 
 
 })->name('index');
+
+Route::get('/public/projects/{id}','App\Http\Controllers\ProjectController@showPublic')->name('project.show.public');
 
 Route::middleware([
     'auth:sanctum',
@@ -37,7 +28,8 @@ Route::middleware([
 
     })->name('dashboard');
 
-    Route::get('/project/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
-    Route::post('/project/new', 'App\Http\Controllers\ProjectController@store');
+    Route::get('/projects/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
+    Route::post('/projects/new', 'App\Http\Controllers\ProjectController@store');
+    Route::get('/projects/{id}', 'App\Http\Controllers\ProjectController@show')->name('project.show');
 
 });

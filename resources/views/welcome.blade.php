@@ -17,6 +17,7 @@
     <div class="container p-4">
         @livewire('project-list-simple-box')
     </div>
+
     <footer class="container flex justify-between mt-3">
         <div class="p-2">
             <div class="mb-3 text-lg">Contact</div>
@@ -33,4 +34,5 @@
             </div>
         </div>
     </footer>
+    
 </x-app-layout>

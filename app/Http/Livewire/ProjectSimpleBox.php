@@ -11,8 +11,10 @@ class ProjectSimpleBox extends Component
     public $description;
     public $owner;
     public $created_at;
+    public $project_id;
 
     public function mount($project){
+        $this->project_id = $project->id;
         $this->name = $project->name;
         $this->description = $project->description;
         $this->owner = $project->user;

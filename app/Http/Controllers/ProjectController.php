@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
 
     public function create(){
-        return view("project.project_create");
+        return view("project.project-create");
     }
 
     public function store(Request $request){
@@ -38,6 +38,26 @@ class ProjectController extends Controller
         $request->session()->flash('flash.bannerStyle', 'success');
 
         return redirect()->route("dashboard");
+
+    }
+
+    public function show(Request $request, $id){
+        
+        $project = Project::findOrFail($id);
+
+        return view("project.project-show",[
+            "project" => $project
+        ]);
+
+    }
+
+    public function showPublic(Request $request, $id){
+        
+        $project = Project::findOrFail($id);
+
+        return view("project.project-show-public",[
+            "project" => $project
+        ]);
 
     }
 
