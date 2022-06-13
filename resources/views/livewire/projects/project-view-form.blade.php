@@ -6,7 +6,7 @@
                 @auth
                     @if(Auth::user()->id == $project->user->id) 
                         <div>
-                            <x-buttons.default href="#edit">Modifier</x-buttons.default>
+                            <x-buttons.default :href="route('project.update',$project->id)">Modifier</x-buttons.default>
                         </div>  
                     @endif 
                 @endauth        

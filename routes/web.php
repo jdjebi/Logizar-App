@@ -31,5 +31,6 @@ Route::middleware([
     Route::get('/projects/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
     Route::post('/projects/new', 'App\Http\Controllers\ProjectController@store');
     Route::get('/projects/{id}', 'App\Http\Controllers\ProjectController@show')->name('project.show');
+    Route::get('/projects/{id}/update', 'App\Http\Controllers\ProjectController@update')->name('project.update');
 
 });

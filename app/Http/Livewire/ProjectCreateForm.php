@@ -19,10 +19,7 @@ class ProjectCreateForm extends Component
 
     public function submit()
     { 
-        Log::debug("test");
-
         $this->validate(); 
-
 
         $project = new Project;
 

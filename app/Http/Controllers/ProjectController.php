@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
 
     public function create(){
-        return view("project.project-create");
+        return view("project.create");
     }
 
     public function store(Request $request){
@@ -55,7 +55,17 @@ class ProjectController extends Controller
         
         $project = Project::findOrFail($id);
 
-        return view("project.project-show-public",[
+        return view("project.show-public",[
+            "project" => $project
+        ]);
+
+    }
+
+    public function update(Request $request, $id){
+        
+        $project = Project::findOrFail($id);
+
+        return view("project.update",[
             "project" => $project
         ]);
 
