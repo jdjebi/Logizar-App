@@ -18,17 +18,18 @@
                     </a>
                 </div>
 
-                @auth
-
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                         {{ __('Projets') }}
                     </x-jet-nav-link>
+
+                    @auth
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Tabeau de bord') }}
                     </x-jet-nav-link>
+                    @endauth
+                    
                 </div>
-                @endauth
             </div>
 
             <div class="flex">
