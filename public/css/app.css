@@ -1006,10 +1006,6 @@ select {
   margin-left: auto;
   margin-right: auto;
 }
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
@@ -1259,6 +1255,14 @@ select {
 }
 .list-disc {
   list-style-type: disc;
+}
+.columns-1 {
+  -moz-columns: 1;
+       columns: 1;
+}
+.break-inside-avoid {
+  -moz-column-break-inside: avoid;
+       break-inside: avoid;
 }
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -2298,6 +2302,11 @@ select {
 
   .md\:grid {
     display: grid;
+  }
+
+  .md\:columns-3 {
+    -moz-columns: 3;
+         columns: 3;
   }
 
   .md\:grid-cols-3 {
