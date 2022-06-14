@@ -8,6 +8,12 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('Nom') }}" />
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model="name"/>
+            <span class="text-sm text-gray-500">le résumé doit posséder 30 caractères</span>
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="summary" value="{{ __('Résumé') }}" />
+            <x-jet-input id="summary" type="text" class="mt-1 block w-full" wire:model="summary"/>
+            <span class="text-sm text-gray-500">le résumé doit posséder 70 caractères</span>
         </div>
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="description" value="Description" />

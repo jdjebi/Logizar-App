@@ -8,6 +8,13 @@
         <div>
             <x-jet-label for="name" value="Nom du projet" />
             <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name" :value="old('name')" />
+            <span class="text-sm text-gray-500">le nom doit posséder 30 caractères</span>
+        </div>
+
+        <div class="mt-4">
+            <x-jet-label for="summary" value="Résumé" />
+            <x-jet-input id="summary" class="block mt-1 w-full" type="text" wire:model="summary" :value="old('summary')" />
+            <span class="text-sm text-gray-500">le résumé doit posseder 70 caractères</span>
         </div>
 
         <div class="mt-4">
