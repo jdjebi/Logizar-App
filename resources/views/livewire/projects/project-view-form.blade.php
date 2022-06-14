@@ -2,7 +2,12 @@
     <div class="bg-zinc-50">
         <div class="py-10 px-5 sm:px-10 md:px-52 ">
             <div class="flex justify-between items-center">
-                <div class="text-3xl font-semibold">{{ $project->name }}</div>    
+                <div>
+                    <div class="text-3xl font-semibold">{{ $project->name }}</div>    
+                    <div>
+                        <span class="text-gray-600">{{ $project->summary }}</span>
+                    </div>
+                </div>
                 @auth
                     @if(Auth::user()->id == $project->user->id) 
                         <div>
