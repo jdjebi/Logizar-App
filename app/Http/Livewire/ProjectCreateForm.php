@@ -11,9 +11,11 @@ class ProjectCreateForm extends Component
 {
     public $name;
     public $description;
+    public $summary;
 
     protected $rules = [
         'name' => 'required|max:30',
+        'summary' => 'required|max:70',
         'description' => 'required'
     ];
 
@@ -22,17 +24,13 @@ class ProjectCreateForm extends Component
         $this->validate(); 
 
         $project = new Project;
-
         $project->name = $this->name;
-
         $project->description = $this->description;
-
+        $project->summary = $this->summary;
         $project->user_id = Auth::id();
-
         $project->save();
         
         session()->flash('flash.banner', 'Projet créé !');
-        
         session()->flash('flash.bannerStyle', 'success');
 
         return redirect()->route("dashboard");
