@@ -15,7 +15,7 @@
     </x-slot>
 
     <div class="container p-4">
-        @livewire('project-list-simple-box')
+        @livewire('projects.project-simple-card-list')
     </div>
 
     <footer class="container flex justify-between mt-3">
