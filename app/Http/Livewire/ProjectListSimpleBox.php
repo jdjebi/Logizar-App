@@ -7,12 +7,14 @@ use App\Models\Project;
 
 class ProjectListSimpleBox extends Component
 {
+    public $projects;
+
+    public function mount(){
+        $this->projects = Project::orderByDesc("created_at")->get();
+    }
+
     public function render()
     {
-        $projects = Project::orderByDesc("created_at")->get();
-
-        return view('livewire.project-list-simple-box',[
-            "projects" => $projects
-        ]);
+        return view('livewire.project-list-simple-box');
     }
 }
