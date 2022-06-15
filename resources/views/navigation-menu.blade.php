@@ -27,6 +27,11 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Tabeau de bord') }}
                     </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                        {{ __('Administration') }}
+                    </x-jet-nav-link>
+
                     @endauth
                     
                 </div>
@@ -118,6 +123,9 @@
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Tableau de bord') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                    {{ __('Administration') }}
                 </x-jet-responsive-nav-link>
             </div>
             <div class="pt-4 pb-1 border-t border-gray-200">

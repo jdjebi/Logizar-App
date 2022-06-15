@@ -23,9 +23,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', function () {
-
         return view('dashboard');
-
     })->name('dashboard');
 
     Route::get('/projects/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
@@ -33,4 +31,5 @@ Route::middleware([
     Route::get('/projects/{id}', 'App\Http\Controllers\ProjectController@show')->name('project.show');
     Route::get('/projects/{id}/update', 'App\Http\Controllers\ProjectController@update')->name('project.update');
 
+    Route::get('/admin', 'App\Http\Controllers\Admin\AdminController@adminCategory')->name('admin.index');
 });
