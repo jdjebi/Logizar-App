@@ -35,8 +35,8 @@
                     <x-tables.simple-table.td>{{ $category->slug }}</x-tables.simple-table.td>
                     <x-tables.simple-table.td>{{ $category->updated_at->format("d/m/Y") }}</x-tables.simple-table.td>
                     <x-tables.simple-table.td class="text-right">
-                        <x-buttons.light href="#edit" class="text-xs">Modifier</x-buttons>
-                        <x-buttons.red href="#delete" class="text-xs mr-0">Supprimer</x-buttons>
+                        <x-buttons.light wire:click='openUpdateModal({{ $category->id }})' href="#edit" class="text-xs">Modifier</x-buttons>
+                        <x-buttons.red wire:click='openDeleteModal({{ $category->id }})' href="#delete" class="text-xs mr-0">Supprimer</x-buttons>
                     </x-tables.simple-table.td>
                 </x-tables.simple-table.row>
             @endforeach
@@ -53,7 +53,7 @@
                 <div>
                     <x-jet-validation-errors class="mb-1" />
                 </div>
-                <form class="space-y-6" wire:submit.prevent="submit">
+                <form class="space-y-6" wire:submit.prevent="create">
                     @csrf
                     <div>
                         <x-jet-label for="categoryName" value="Titre de la catégorie" />
@@ -63,5 +63,55 @@
                 </form>
             </div>
         </div>
-    </x-jet-confirmation-modal>    
+    </x-jet-modal> 
+
+    <x-jet-modal wire:model="uiOpenUpdateModal" maxWidth="sm">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button wire:click="$toggle('uiOpenUpdateModal')" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+            </button>
+            <div class="py-6 px-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900">Mise à jour</h3>
+                <div>
+                    <x-jet-validation-errors class="mb-1" />
+                </div>
+                <form class="space-y-6" wire:submit.prevent="update">
+                    @csrf
+                    <div>
+                        <div class="mb-2" >
+                            <x-jet-label for="categoryName" value="Titre de la catégorie" />
+                            <x-jet-input id="categoryName" class="block mt-1 w-full" type="text" placeholder="Education" wire:model="name" />
+                        </div>
+                        <div>
+                            <x-jet-label for="categorySlug" value="Slug" />
+                            <x-jet-input id="categorySlug" class="block mt-1 w-full" type="text" wire:model="slug" disabled />
+                        </div>
+                    </div>     
+                    <div class="text-right">
+                        <x-buttons.btn-light type="button" wire:click="$toggle('uiOpenUpdateModal')" lass="text-sm" wire:loading.attr="disabled">Annuler</x-buttons.btn-light>               
+                        <x-buttons.btn-default type="submit" wire:click='"' class="ml-1 text-sm" wire:loading.attr="disabled">Enregistrer</x-buttons.btn-default>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </x-jet-modal> 
+
+    <x-jet-modal wire:model="uiOpenDeleteModal" maxWidth="sm">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button wire:click="$toggle('uiOpenDeleteModal')" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+            </button>
+            <div class="py-6 px-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900">Supprimer la catégorie</h3>
+                <div class="sm:mt-0 sm:ml-4 sm:text-left">
+                    Voulez vous vraiment supprimer la catégorie ? 
+                </div>     
+                <div class="text-right">
+                    <x-buttons.btn-light type="button" wire:click="$toggle('uiOpenDeleteModal')" lass="text-sm" wire:loading.attr="disabled">Annuler</x-buttons.btn-light>               
+                    <x-buttons.btn-red type="button" wire:click="delete"  class="ml-1 text-sm" wire:loading.attr="disabled">Oui</x-buttons.btn-default>
+                </div>
+            </div>
+        </div>
+    </x-jet-modal> 
+
 </div>
