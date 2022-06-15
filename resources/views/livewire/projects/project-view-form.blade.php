@@ -41,9 +41,8 @@
                     <div class="my-10">
                         <hr>
                     </div>
-            
                     <div>
-                        <x-buttons.red href="#delete">Supprimer</x-buttons.red>
+                        @livewire('projects.delete.project-delete-button', ['project' => $project])
                     </div>
                 </div>
             @endif

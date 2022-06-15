@@ -13,7 +13,7 @@
     @else
         <div>
             @foreach ($projects as $project)
-                <livewire:project-simple-box :project="$project">
+                @livewire("project-simple-box", ["project" => $project], key($project->id))
                 <hr>
             @endforeach
         </div>

@@ -13,6 +13,8 @@ class ProjectSimpleBox extends Component
     public $created_at;
     public $project_id;
 
+    public $uiConfirmingUserDeletion = false;
+
     public function mount($project){
         $this->project_id = $project->id;
         $this->name = $project->name;
@@ -21,8 +23,22 @@ class ProjectSimpleBox extends Component
         $this->created_at = $project->created_at->format('d/m/Y');
     }
 
-    public function render()
-    {
+    public function delete(){     
+
+        $this->project->delete();
+
+        session()->flash('flash.banner', 'Projet supprimé');
+        session()->flash('flash.bannerStyle', 'success');
+
+        return redirect()->route("dashboard");
+    }
+
+    public function openConfirmDeletionModal(){
+        $this->uiConfirmingUserDeletion = true;
+    }
+
+    public function render(){
         return view('livewire.project-simple-box');
     }
+
 }
