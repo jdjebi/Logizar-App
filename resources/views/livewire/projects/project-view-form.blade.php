@@ -1,6 +1,6 @@
 <div>
     <div class="bg-zinc-50">
-        <div class="py-10 px-5 sm:px-10 md:px-52 ">
+        <div class="py-10 px-5 sm:px-10 md:px-64">
             <div class="flex justify-between items-center">
                 <div>
                     <div class="text-3xl font-semibold">{{ $project->name }}</div>    
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="py-5 px-5 sm:px-10 md:px-52">
+    <div class="py-5 px-5 sm:px-10 md:px-64">
         <div>
             <div class="text-2xl font-normal">Présentation</div>
         </div>
@@ -30,7 +30,7 @@
             <span class="text-slate-700 text-sm">Posté le {{ $project->created_at->format('d/m/Y'); }}</span>
         </div>
         <div class="mt-6">
-            <div class="text-slate-700">
+            <div class="text-slate-700 text-md leading-loose ">
                 {{ $project->description }}
             </div>
         </div>
