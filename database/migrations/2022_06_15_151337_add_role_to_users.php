@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role',20);
+            $table->string('role',20)->default("user");
         });
     }
 
@@ -29,4 +29,5 @@ return new class extends Migration
             $table->dropColumn('role');
         });
     }
+
 };
