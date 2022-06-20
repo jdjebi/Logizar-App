@@ -24,14 +24,15 @@
                     </x-jet-nav-link>
 
                     @auth
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Tabeau de bord') }}
-                    </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Tabeau de bord') }}
+                        </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
-                        {{ __('Administration') }}
-                    </x-jet-nav-link>
-
+                        @if(Auth::user()->role == "admin")
+                            <x-jet-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                                {{ __('Administration') }}
+                            </x-jet-nav-link>
+                        @endif
                     @endauth
                     
                 </div>
@@ -124,9 +125,11 @@
                 <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Tableau de bord') }}
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
-                    {{ __('Administration') }}
-                </x-jet-responsive-nav-link>
+                @if(Auth::user()->role == "admin")
+                    <x-jet-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                        {{ __('Administration') }}
+                    </x-jet-responsive-nav-link>
+                @endif
             </div>
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
