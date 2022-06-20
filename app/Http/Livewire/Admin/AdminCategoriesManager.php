@@ -21,7 +21,7 @@ class AdminCategoriesManager extends Component
     public $categories;
 
     public $rules = [
-        "name" => "required|max:30|unique:categories"
+        "name" => "required|max:25|unique:categories"
     ];
 
     public function mount(){
