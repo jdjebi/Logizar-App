@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function projects(){
         return $this->hasMany(Project::class)->orderBy('created_at', 'desc');
     }
+
+    public function isAdmin(){
+        return $this->role == "admin" ? true : false;
+    }
 }
