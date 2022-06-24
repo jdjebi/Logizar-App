@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('other_categries', function (Blueprint $table) {
+        Schema::create('other_categories', function (Blueprint $table) {
             $table->id();
-            $table->string("name",25);
+            $table->string("name",35);
             $table->string("type",10)->default("other");
             $table->string("slug");
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('autre_category');
+        Schema::dropIfExists('other_categories');
     }
 };
