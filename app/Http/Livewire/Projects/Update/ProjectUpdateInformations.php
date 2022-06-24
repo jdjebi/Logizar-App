@@ -31,9 +31,12 @@ class ProjectUpdateInformations extends Component
         $this->project->description = $this->description;
         $this->project->summary = $this->summary;
         $this->project->save();
-        session()->flash('flash.banner', 'Description du projet mise à jour !');
-        session()->flash('flash.bannerStyle', 'success');
-        return redirect()->route("project.update",$this->project->id);
+
+        $this->dispatchBrowserEvent('alert',[
+            'type'=>'success',
+            'message'=> "Description mise à jour !"
+        ]);
+
     }
 
     public function render()
