@@ -125,6 +125,9 @@
                 <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Tableau de bord') }}
                 </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('project.create') }}" :active="request()->routeIs('project.create')">
+                    {{ __('Nouveau projet') }}
+                </x-jet-responsive-nav-link>
                 @if(Auth::user()->role == "admin")
                     <x-jet-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
                         {{ __('Administration') }}
