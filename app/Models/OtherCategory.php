@@ -9,7 +9,7 @@ class OtherCategory extends Model
 {
     use HasFactory;
 
-    protected $tableName = "other_categories";
+    protected $table = "other_categories";
 
     protected $dates = ['created_at'];
 

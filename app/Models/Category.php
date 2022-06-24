@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $tableName = "categories";
+    protected $table = "categories";
 
     protected $dates = ['created_at'];
 
