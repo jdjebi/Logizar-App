@@ -33,9 +33,9 @@ class ProjectController extends Controller
 
         $project->save();
 
-        $request->session()->flash('flash.banner', 'Projet créé !');
-        
-        $request->session()->flash('flash.bannerStyle', 'success');
+        session()->flash('flash.banner', 'Projet créé !');
+    
+        session()->flash('flash.bannerStyle', 'success');
 
         return redirect()->route("dashboard");
 
