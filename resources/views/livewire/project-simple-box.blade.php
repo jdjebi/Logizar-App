@@ -11,6 +11,9 @@
         <div class="mt-2">
             {{ Str::words($project->description , 40) }}
         </div>
+        <div class="mt-2">
+            <x-project.category.category-liner :categories="$project->categories()"></x-project>
+        </div>
         <div class="mt-4">
             <x-buttons.light :href="route('project.show',$project_id)" class="text-xs">Afficher</x-buttons.light>
 
