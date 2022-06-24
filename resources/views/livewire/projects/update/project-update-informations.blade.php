@@ -6,6 +6,7 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
+            <div class="text-2xl font-semibold mb-4">Description</div>
             <x-jet-label for="name" value="{{ __('Nom') }}" />
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model="name"/>
             <span class="text-sm text-gray-500">le résumé doit posséder 30 caractères</span>
