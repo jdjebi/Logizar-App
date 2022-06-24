@@ -43,6 +43,29 @@
                     <x-jet-label for="categorie" value="Catégories du projet" />
                 </div>
 
+                <div class="flex items-center mt-2">
+
+                    <x-forms.select name="category" class="block mt-1" wire:model="categorySelectedId">
+                        <option value="">Sélectionnez une catégorie</option>
+                        @foreach ($categories as $category)
+                            @if(!in_array($category->id,$categoriesTabou))
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>    
+                            @endif
+                        @endforeach
+                        <option value="other">Autre</option>
+                    </x-forms>
+
+                    @if($categorySelectedId == "other")
+                        <x-jet-input id="otherCategoryContent" class="block mt-1 w-full ml-3" type="text" wire:model.defer="otherCategoryContent"
+                            placeholder="Titre de la catégorie" />
+                    @endif
+
+                    <div class="ml-3">
+                        <x-jet-button type="button" class="py-3" wire:click="addCategory" :disabled="$addCategoryDisabled">Ajouter</x-jet-button>
+                    </div>
+
+                </div>
+
                 <div class="mt-2">
                     @foreach ($categoriesSelected as $category)
                         @if($category['type'] == "system")
@@ -66,31 +89,6 @@
                         @endif
                     @endforeach
                 </div>
-
-                <div class="flex items-center mt-5">
-
-                    <x-forms.select name="category" class="block mt-1" wire:model="categorySelectedId">
-                        <option value="">Sélectionnez une catégorie</option>
-                        @foreach ($categories as $category)
-                            @if(!in_array($category->id,$categoriesTabou))
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>    
-                            @endif
-                        @endforeach
-                        <option value="other">Autre</option>
-                    </x-forms>
-
-                    @if($categorySelectedId == "other")
-                        <x-jet-input id="otherCategoryContent" class="block mt-1 w-full ml-3" type="text" wire:model.defer="otherCategoryContent"
-                            placeholder="Titre de la catégorie" />
-                    @endif
-
-                    <div class="ml-3">
-                        <x-jet-button type="button" class="py-3" wire:click="addCategory" :disabled="$addCategoryDisabled">Ajouter</x-jet-button>
-                    </div>
-
-                </div>
-
-
 
             </div>
         </div>

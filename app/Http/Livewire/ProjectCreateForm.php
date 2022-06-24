@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\OtherCategory;
+use App\Models\ProjectCategory;
+use Illuminate\Validation\Validator;
+use Illuminate\Support\Str;
 
 class ProjectCreateForm extends Component
 {
@@ -21,6 +24,7 @@ class ProjectCreateForm extends Component
     public $categoriesSelected = [];
     public $categoriesTabou = [];
     public $addCategoryDisabled = false;
+    protected $MAX_CATEGORY = 3;
 
     protected $rules = [
         'name' => 'required|max:30',
@@ -30,35 +34,33 @@ class ProjectCreateForm extends Component
 
     public function mount(){
         $this->categories = Category::orderBy("name")->get();
-
-        /*
-        if(count($this->categories) > 0){
-            $this->categorySelectedId = $this->categories[0]->id;
-        }
-        */
     }
 
     public function addCategory(){  
     
         if(!empty($this->categorySelectedId)){
 
-            if($this->categorySelectedId == "other" and !empty($this->otherCategoryContent)){
-                $otherCategory = new OtherCategory;
-                $otherCategory->name = $this->otherCategoryContent; 
-                $otherCategory->type = "other";              
-                $this->categoriesSelected[] = $otherCategory->toArray();
+            if($this->categorySelectedId == "other"){
+                if(!empty($this->otherCategoryContent)){
+                    $otherCategory = new OtherCategory;
+                    $otherCategory->id = null; 
+                    $otherCategory->name = $this->otherCategoryContent; 
+                    $otherCategory->type = "other";              
+                    $this->categoriesSelected[] = $otherCategory->toArray();
+                }
             }else{
                 $category = $this->categories->find($this->categorySelectedId);
                 $this->categoriesSelected[] = $category->toArray();
                 $this->categoriesTabou[] = $category->id;
             }
 
-            if(count($this->categoriesSelected) == 3){
+            if(count($this->categoriesSelected) == $this->MAX_CATEGORY){
                 $this->addCategoryDisabled = true;
             }
 
             $this->reset("categorySelectedId");
             $this->reset("otherCategoryContent");
+
         }
     }
 
@@ -77,29 +79,88 @@ class ProjectCreateForm extends Component
         if(count($this->categoriesSelected) == 2){
             $this->addCategoryDisabled = false;
         }
+        
     }
 
     public function submit()
     { 
 
-        error_log($this->name);
-        error_log($this->description);
-        error_log($this->summary);
-        error_log(json_encode($this->categoriesSelected));
+        /*
+            Cette methode de validation permet de valider les categories car elles ne sont pas champs du composant.
+            Leur validation est donc faite après la validation des champs. Ici on vérifie les axes suivant :
 
-        return;
+            - Verifier qu'il y'a au moins une categorie
+            - Verification de la repetition d'une categorie
+            - Verifier que les catégories existent (sauf celle autre)
+            - Vérifier que la catégorie autre possède une description
+            - Vérifier la taille du nom des catégories, y compris celle de la catégorie autre
+        */
 
-        $this->validate(); 
+        $this->withValidator(function (Validator $validator) {
 
-        // Faire un code de validation des catégories
+            $validator->after(function ($validator) {
+                   
+                if(count($this->categoriesSelected) == 0){
 
+                    $validator->errors()->add('categories.empty', 'Veuillez renseigner au moins une catégorie.');
+
+                    foreach($this->categoriesSelected as $category){
+                        
+                        if($category->type == "other" && !empty($category->name)){
+
+                            $validator->errors()->add('categories.other.empty', 'Une catégorie autre ne possède pas de titre. Veuillez en renseigner une.');
+
+                        }
+                        
+                    }
+
+                }
+
+            });
+
+        })->validate();
+
+        // Enregistrement du projet
         $project = new Project;
         $project->name = $this->name;
         $project->description = $this->description;
         $project->summary = $this->summary;
         $project->user_id = Auth::id();
         $project->save();
+
+        // Enregistrement de la categorisation
+        foreach($this->categoriesSelected as $category){
+
+            error_log($category["type"]);
+
+            if($category["type"] == "other"){
+
+                $otherCategory = new OtherCategory;
+                $otherCategory->name = $category["name"];
+                $otherCategory->slug = Str::slug($category["name"], '-');
+                $otherCategory->type = "other";
+                $otherCategory->save();
+
+                $projectCategory = new ProjectCategory;
+                $projectCategory->project_id = $project->id;
+                $projectCategory->category_id = $otherCategory->id;
+                $projectCategory->type = "other";
+                $projectCategory->save();
+
+            }else{
+
+                $id = $category["id"];
+                $projectCategory = new ProjectCategory;
+                $projectCategory->project_id = $project->id;
+                $projectCategory->category_id = $id;
+                $projectCategory->type = "system";
+                $projectCategory->save();
+
+            }
+
+        }
         
+        // Notification
         session()->flash('flash.banner', 'Projet créé !');
         session()->flash('flash.bannerStyle', 'success');
 
