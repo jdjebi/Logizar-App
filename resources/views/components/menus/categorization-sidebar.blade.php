@@ -1,0 +1,1 @@
+@livewire('menus.categorization.categorization-sidebar')
