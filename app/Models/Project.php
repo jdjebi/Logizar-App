@@ -13,10 +13,7 @@ class Project extends Model
 
     protected $dates = ['created_at'];
 
-    protected $fillable = [
-        'name',
-        'description',
-    ];  
+    protected $guarded = [];
     
     public function user(){
         return $this->belongsTo(User::class);
@@ -26,6 +23,8 @@ class Project extends Model
         $categories = [];
 
         $projectCategories = $this->projectCategories()->get();
+
+        error_log(json_encode($projectCategories));
 
         foreach($projectCategories as $pcategory){
             if($pcategory->type == "system"){
