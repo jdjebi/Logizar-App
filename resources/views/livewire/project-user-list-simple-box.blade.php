@@ -1,12 +1,15 @@
 <div>
-    @if(!$projects)
+    @if(count($projects) == 0)
         <div class="text-center">
-            <div class="font-semibold text-lg">
+            <div class="font-semibold text-lg my-10">
                 <div>
-                    Aucun projet pour l'instant ? Exprimez vos idées librement !
+                    Aucun projet pour l'instant
                 </div>
-                <div>
-                    Exprimez vos idées librement ! Car l'expression est le pourquoi de l'existence de Logizar.
+                <div class="mt-5">
+                    Exprimez vos idées librement ! L'expression est le pourquoi de l'existence de Logizar
+                </div>
+                <div class="mt-5">
+                    <x-buttons.default href="{{ route('project.create') }}" class="text-lg">Créer un projet</x-buttons.default>
                 </div>
             </div>
         </div>
