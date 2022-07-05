@@ -57,7 +57,7 @@
                     Logizar, le livre d'or des créateurs de solutions logicielles. L'expression est la seule limite.
                 </p>
                 <p class="text-xs mt-2">
-                    version : 0.0.1.2-alpha
+                    version : 0.0.1.2
                 </p>
             </div>
         
