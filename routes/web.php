@@ -2,19 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Project;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Logizar\Search\SearchEngine;
 
 Route::get('/', function () {
 
     $projects = Project::orderByDesc("created_at")->get();
 
-    return view('welcome',[
+    return view('welcome', [
         "projects" => $projects
     ]);
 
-
 })->name('index');
 
-Route::get('/public/projects/{id}','App\Http\Controllers\ProjectController@showPublic')->name('project.show.public');
+
+Route::get('/search','App\Http\Controllers\Search\SearchController@basic')->name('search.results');
+
+Route::get('/public/projects/{id}', 'App\Http\Controllers\ProjectController@showPublic')->name('project.show.public');
 
 Route::middleware([
     'auth:sanctum',
@@ -34,5 +39,13 @@ Route::middleware([
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', 'App\Http\Controllers\Admin\AdminController@adminCategory')->name('admin.index');
     });
+});
 
+Route::get("tests/search", function (Request $request) {
+    $searchContent = $request->q;
+    if(!empty($searchContent)){
+        $searchEngine = new SearchEngine();  
+        $results = $searchEngine->searchWithLikeAndOrderByFulltext($searchContent);
+    }
+    return $results;
 });
