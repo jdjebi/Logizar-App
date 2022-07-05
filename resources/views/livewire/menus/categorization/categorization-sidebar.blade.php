@@ -53,6 +53,15 @@
                 </ul>
             </div>
         </div>
+        <div id="dropdown-cta" class="p-4 mt-6 bg-blue-50 rounded-lg dark:bg-blue-900" role="alert">
+            <div class="flex items-center mb-3">
+               <span class="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">Info</span>
+            </div>
+            <p class="mb-3 text-sm text-blue-900 dark:text-blue-400">
+                Logizar est un projet en open-source. Vous pouvez contribuer en toute en liberté.
+            </p>
+            <a class="text-sm text-blue-900 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" href="https://github.com/jdjebi/Logizar-App">Contribuer au projet</a>
+         </div>
     </aside>
 
 </div>
