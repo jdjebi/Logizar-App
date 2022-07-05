@@ -22,8 +22,8 @@ class ProjectSimpleCardList extends Component
         $this->projectsDefault = $this->projects;
     }
 
-
-    public function refreshProjects($keys){
+    public function refreshProjects($data){
+        $keys = $data["keys"];
         if(empty($keys)){
             $this->projects = $this->projectsDefault;
         }else{

@@ -28,7 +28,10 @@ class CategorizationSidebar extends Component
 
     public function getIdCategoriesSelected(){
         $keys = array_keys($this->categoriesSelected,true);
-        $this->emit('projectsSelectedByCategorizationSidebar',$keys);
+        $this->emit('projectsSelectedByCategorizationSidebar',[
+            "keys" => $keys,
+            "filter_in" => "all"
+        ]);
     }
 
     public function render()
