@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
  
         $user->name = "Dje Bi Jean-Marc";
 
-        $user->email = "jeanmarcdjebi@gmail.com";
+        $user->email = "jdjebi@logizar.ci";
 
         $user->role = "admin";
 
