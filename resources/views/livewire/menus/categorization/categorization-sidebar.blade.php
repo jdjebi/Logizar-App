@@ -53,7 +53,7 @@
                 </ul>
             </div>
         </div>
-        <div id="dropdown-cta" class="p-4 mt-6 bg-blue-50 rounded-lg dark:bg-blue-900" role="alert">
+        <div id="dropdown-cta" class="p-4 mt-6 bg-blue-50 rounded-lg" role="alert">
             <div class="flex items-center mb-3">
                <span class="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">Info</span>
             </div>
