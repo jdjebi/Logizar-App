@@ -54,10 +54,10 @@
                     <span class="text-sm italic">Par Jean-Marc Dje Bi</span>
                 </div>
                 <p>
-                    Logizar, le livre d'or des créateurs de solutions logicielles. L'expression est la seule limite.
+                    Logizar, la plateforme dédiée au partage de solutions logicielles. L'expression est la seule limite.
                 </p>
                 <p class="text-xs mt-2">
-                    version : 0.0.1.2
+                    version : 0.0.1.3-alpha
                 </p>
             </div>
         
