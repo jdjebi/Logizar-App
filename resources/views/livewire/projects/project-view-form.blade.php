@@ -36,11 +36,8 @@
             <span class="text-slate-700 text-sm">Posté le {{ $project->created_at->format('d/m/Y'); }}</span>
         </div>
         <div class="mt-6">
-            <div class="text-slate-700 text-lg leading-loose ">
-                {{ $project->description }}
-            </div>
+            <div class="text-slate-700 text-lg leading-loose whitespace-pre-line">{!! $project->makeLinkClickable($project->description,"text-blue-600 font-semibold hover:underline") !!}</div>
         </div>
-        
         @auth
             @if(Auth::user()->id == $project->user->id)
                 <div>
