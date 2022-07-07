@@ -175,6 +175,9 @@
         </div>
     @else
         <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+            <div>
+                <x-search.simple-search-box class="rounded-none w-full border-x-0"></x-search.simple-search-box>
+            </div>
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="space-y-1">
                     <div class="pt-2 pb-3 space-y-1">
