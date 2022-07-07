@@ -18,6 +18,10 @@ class ProjectCreateForm extends Component
     public $name;
     public $description;
     public $summary;
+    public $code_name;
+
+    public $baseUrl;
+    public $codeNameIsUnique = true;
 
     public $categorySelectedId;
     public $otherCategoryContent;
@@ -28,11 +32,15 @@ class ProjectCreateForm extends Component
 
     protected $rules = [
         'name' => 'required|max:30',
+        'code_name' => 'required|regex:/^\w[-.\w]*\w$/|max:45|unique:projects',
         'summary' => 'required|max:70',
         'description' => 'required'
     ];
 
     public function mount(){
+        $this->baseUrl = route("project.show.bycodename",[
+            "code_name" => ""
+        ]);
         $this->categories = Category::orderBy("name")->get();
     }
 
@@ -82,6 +90,33 @@ class ProjectCreateForm extends Component
         
     }
 
+    public function generateCodeName(){
+        if(empty($this->name)){
+            $this->code_name = "";
+        }else{
+            $this->code_name = Str::slug($this->name,".");
+        }
+        $this->checkCodeNameUnicity();
+    }
+
+    public function checkCodeNameUnicity(){
+        // Verifier si le code est unique
+        $result = Project::where("code_name",$this->code_name)->count(); 
+        error_log("d");
+        error_log($result);
+        error_log("d");
+        if($result==0){
+            // Cette condition supplémentaire permet d'éviter la mise à jour su la valeur n'a pas changé
+            if($this->codeNameIsUnique == false){
+                $this->codeNameIsUnique = true;
+            }
+        }else{
+            if($this->codeNameIsUnique == true){
+                $this->codeNameIsUnique = false;
+            }
+        }
+    }
+
     public function submit()
     { 
 
@@ -125,6 +160,7 @@ class ProjectCreateForm extends Component
         $project->name = $this->name;
         $project->description = $this->description;
         $project->summary = $this->summary;
+        $project->code_name = $this->code_name;
         $project->user_id = Auth::id();
         $project->save();
 
@@ -164,7 +200,7 @@ class ProjectCreateForm extends Component
         session()->flash('flash.banner', 'Projet créé !');
         session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route("dashboard");
+        return redirect()->route("project.show.bycodename",$project->code_name);
     }
     
     public function render()
