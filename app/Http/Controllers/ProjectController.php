@@ -51,6 +51,24 @@ class ProjectController extends Controller
 
     }
 
+    public function showByCodeName(Request $request, $code_name=""){
+        
+        if(empty($code_name)){
+            return "error 404";
+        }
+
+        $project = Project::where("code_name",$code_name)->get()->first();
+
+        if(!$project){
+            return "project introuvable";
+        }
+
+        return view("project.project-show",[
+            "project" => $project
+        ]);
+
+    }
+
     public function showPublic(Request $request, $id){
         
         $project = Project::findOrFail($id);
