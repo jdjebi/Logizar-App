@@ -102,9 +102,6 @@ class ProjectCreateForm extends Component
     public function checkCodeNameUnicity(){
         // Verifier si le code est unique
         $result = Project::where("code_name",$this->code_name)->count(); 
-        error_log("d");
-        error_log($result);
-        error_log("d");
         if($result==0){
             // Cette condition supplémentaire permet d'éviter la mise à jour su la valeur n'a pas changé
             if($this->codeNameIsUnique == false){
