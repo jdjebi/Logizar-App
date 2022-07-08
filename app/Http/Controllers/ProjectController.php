@@ -54,14 +54,10 @@ class ProjectController extends Controller
     public function showByCodeName(Request $request, $code_name=""){
         
         if(empty($code_name)){
-            return "error 404";
+            abort(404);
         }
 
-        $project = Project::where("code_name",$code_name)->get()->first();
-
-        if(!$project){
-            return "project introuvable";
-        }
+        $project = Project::where("code_name",$code_name)->get()->firstOrFail();
 
         return view("project.project-show",[
             "project" => $project
@@ -73,7 +69,7 @@ class ProjectController extends Controller
         
         $project = Project::findOrFail($id);
 
-        return view("project.show-public",[
+        return view("project.project-show",[
             "project" => $project
         ]);
 
