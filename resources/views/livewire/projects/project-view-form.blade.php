@@ -4,7 +4,17 @@
             <div>
                 <div class="flex justify-between items-center">
                     <div>
-                        <div class="text-3xl font-semibold">{{ $project->name }}</div>    
+                        <div class="text-3xl font-semibold">{{ $project->name }}</div>   
+                        @isset($project->code_name) 
+                            @php
+                                $projectUrl = route("project.show.bycodename",$project->code_name)
+                            @endphp
+                            <div>
+                                <a class="text-blue-600 text-xs font-bold hover:underline" href="{{ $projectUrl  }}">
+                                    <span class="">{{ $projectUrl  }}</span>
+                                </a>
+                            </div>
+                        @endisset
                     </div>
                     @auth
                         @if(Auth::user()->id == $project->user->id) 
@@ -15,7 +25,7 @@
                     @endauth        
                 </div>
                 <div>
-                    <div class="mt-2 mb-3">
+                    <div class="mt-3 mb-5">
                         <x-project.category.category-liner :categories="$project->categories()"></x-project>
                     </div>
                     <div>
