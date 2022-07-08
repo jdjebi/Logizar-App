@@ -22,14 +22,14 @@ class SearchEngine
         $keys = explode(" ", $searchContent);
 
         foreach ($keys as $k) {
-            $query_part = "(name LIKE '%$k%' OR summary LIKE '%$k%' OR description LIKE '%$k%')";
+            $query_part = "(name LIKE \"%$k%\" OR summary LIKE \"%$k%\" OR description LIKE \"%$k%\")";
             $query_parts[] = $query_part;
         }
 
         $query_mix_parts = implode(" OR ", $query_parts);
 
         $results = Project::whereRaw($query_mix_parts)
-            ->select(DB::raw("*, MATCH (name,summary,description) AGAINST ('$searchContent') as score"))
+            ->select(DB::raw("*, MATCH (name,summary,description) AGAINST (\"$searchContent\") as score"))
             ->orderByDesc("score")
             ->get();
 
