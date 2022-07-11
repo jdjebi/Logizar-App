@@ -21,8 +21,7 @@
             <div class="mt-4">
                 <x-jet-label for="code_name" value="Code du projet" title="Nom du projet utilisé dans son url" />
                 <x-jet-input id="code_name" class="block mt-1 w-full" type="text" wire:model="code_name"
-                    wire:input='checkCodeNameUnicity'
-                    :value="old('code_name')" />
+                    wire:input='checkCodeNameUnicity' :value="old('code_name')" />
                 <div class="my-3">
                     <span
                         class="text-xs text-gray-500 {{ empty($code_name) || $codeNameIsUnique ? '' : 'text-red-600' }}">
@@ -35,7 +34,8 @@
 
                 <span class="text-sm text-gray-500">45 caractères au maximum. Le code du projet est unique.
                     Appliquez de petites variations pour le rendre unique si necessaire. Exemple : <span
-                        class="font-semibold">logizar.app ou logizar.1</span>. Les caractères spéciaux autorisés : "- .". Mais ces derniers ne doivent figurés ni au début ni à la fin du code.
+                        class="font-semibold">logizar.app ou logizar.1</span>. Les caractères spéciaux autorisés : "-
+                    .". Mais ces derniers ne doivent figurés ni au début ni à la fin du code.
                 </span>
             </div>
 
