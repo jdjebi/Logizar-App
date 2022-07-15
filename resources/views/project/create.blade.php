@@ -6,12 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="container p-8 flex flex-col md:flex-row  justify-between">
-        <div class="grow-0 mr-0 md:mr-8 mb-5 md:mb-0">
-            <div>
-                <span class="text-2xl font-bold">Alors,<br><br>A quoi vous avez pensé ?</span>
-            </div>
-        </div>
+    <div class="container p-8 flex flex-col md:flex-row justify-between">
         <div class="grow">
             
             <livewire:project-create-form />
