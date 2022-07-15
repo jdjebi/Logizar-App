@@ -18,8 +18,8 @@ Route::get('/', function () {
 
 
 Route::get('/search','App\Http\Controllers\Search\SearchController@basic')->name('search.results');
-
 Route::get('/public/projects/{id}', 'App\Http\Controllers\ProjectController@showPublic')->name('project.show.public');
+Route::get('/p/{code_name?}', 'App\Http\Controllers\ProjectController@showByCodeName')->name('project.show.bycodename');
 
 Route::middleware([
     'auth:sanctum',
@@ -31,7 +31,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/p/{code_name?}', 'App\Http\Controllers\ProjectController@showByCodeName')->name('project.show.bycodename');
     Route::get('/projects/new', 'App\Http\Controllers\ProjectController@create')->name('project.create');
     Route::post('/projects/new', 'App\Http\Controllers\ProjectController@store');
     Route::get('/projects/{id}', 'App\Http\Controllers\ProjectController@show')->name('project.show');
