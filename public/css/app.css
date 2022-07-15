@@ -2768,10 +2768,6 @@ select {
     margin-left: 0.75rem;
   }
 
-  .md\:mr-8 {
-    margin-right: 2rem;
-  }
-
   .md\:block {
     display: block;
   }
