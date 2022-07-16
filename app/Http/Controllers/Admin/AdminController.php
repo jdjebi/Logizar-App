@@ -22,4 +22,8 @@ class AdminController extends Controller
     public function adminProjectTypes(){
         return view("admin.categorization.project-types");
     }
+
+    public function adminProjectDeliverables(){
+        return view("admin.categorization.project-deliverables");
+    }
 }

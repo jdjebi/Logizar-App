@@ -41,6 +41,7 @@ Route::middleware([
         Route::get('/admin/projects/categories', 'App\Http\Controllers\Admin\AdminController@adminCategory')->name('admin.project.categories');
         Route::get('/admin/projects/other-categories', 'App\Http\Controllers\Admin\AdminController@adminOtherCategories')->name('admin.project.other-categories');
         Route::get('/admin/projects/types', 'App\Http\Controllers\Admin\AdminController@adminProjectTypes')->name('admin.project.types');
+        Route::get('/admin/projects/deliverables','App\Http\Controllers\Admin\AdminController@adminProjectDeliverables')->name('admin.project.deliverables');
     });
 });
 

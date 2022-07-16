@@ -56,6 +56,9 @@
                         <x-tabs.tab-item-underline :href="route('admin.project.types')" :active="request()->routeIs('admin.project.types')">
                             Types de projet
                         </x-tabs.tab-item-underline>
+                        <x-tabs.tab-item-underline :href="route('admin.project.deliverables')" :active="request()->routeIs('admin.project.deliverables')">
+                            Livrables
+                        </x-tabs.tab-item-underline>
                     </x-tabs.tab-underline>
                 </div>
                 <div class="pb-3">
