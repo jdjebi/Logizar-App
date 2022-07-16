@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 
 import Swal from 'sweetalert2'
 
+require('@fortawesome/fontawesome-free/js/all.js');
+
 window.Alpine = Alpine;
 
 Alpine.start();
