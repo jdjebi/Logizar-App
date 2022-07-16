@@ -6,8 +6,7 @@ class ProjectStatusList
 {
     const STATUS_LIST = [
         "in_progress" => ["name" => "in_progress", "label" => "En cours", ],
-        "in_pause" => ["name" => "in_pause", "label" => "En pause"],
-        "idea" => ["name" => "idea", "label" => "Idée"],
+        "pause" => ["name" => "pause", "label" => "En pause"],
         "abort" => ["name" => "abort", "label" => "Abondonné"],
         "ended" => ["name" => "ended", "label" => "Terminé"],
     ];
