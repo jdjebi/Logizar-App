@@ -8,18 +8,18 @@
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
             <div class="text-2xl font-semibold mb-4">Description</div>
-            <x-jet-label for="name" value="{{ __('Nom') }}" />
+            <x-jet-label for="name" value="Nom*" />
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model="name"
                 wire:input="generateCodeName" />
             <span class="text-sm text-gray-500">le résumé doit posséder 30 caractères</span>
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="summary" value="{{ __('Résumé') }}" />
+            <x-jet-label for="summary" value="Résumé*" />
             <x-jet-input id="summary" type="text" class="mt-1 block w-full" wire:model="summary" />
             <span class="text-sm text-gray-500">le résumé doit posséder 70 caractères</span>
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="code_name" value="Code du projet" title="Nom du projet utilisé dans son url" />
+            <x-jet-label for="code_name" value="Code du projet*" title="Nom du projet utilisé dans son url" />
             <x-jet-input id="code_name" class="block mt-1 w-full" type="text" wire:model="code_name"
                 wire:input='checkCodeNameUnicity' :value="old('code_name')" />
             <div class="my-3">
@@ -39,10 +39,18 @@
             </span>
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="description" value="Description" />
+            <x-jet-label for="description" value="Description*" />
             <textarea
                 class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full"
                 wire:model="description" cols="30" rows="10"></textarea>
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="status" value="Statut du projet*" />
+            <x-forms.select name="status" class="block mt-1" wire:model="status" :value="old('status')">
+                @foreach ($statusList as $status)
+                    <option value="{{ $status["name"] }}">{{  $status["label"] }}</option>
+                @endforeach
+            </x-forms.select>
         </div>
     </x-slot>
 

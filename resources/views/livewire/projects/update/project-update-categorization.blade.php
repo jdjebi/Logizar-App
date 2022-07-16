@@ -52,6 +52,14 @@
                     <x-jet-button type="button" class="py-2 px-2.5" wire:click="addCategory" :disabled="$addCategoryDisabled">Ajouter</x-jet-button>
                 </div>
             </div>
+            <div class="mt-7">
+                <div class="text-lg mb-3">Tags</div>
+                <div class="mt-1">
+                    @livewire('forms.tags-input',[
+                        "tags" => $tags
+                    ])
+                </div>
+            </div>
         </div>
     </x-slot>
 

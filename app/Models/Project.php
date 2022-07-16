@@ -20,13 +20,16 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
     public function categories()
     {
         $categories = [];
 
         $projectCategories = $this->projectCategories()->get();
-
-        error_log(json_encode($projectCategories));
 
         foreach ($projectCategories as $pcategory) {
             if ($pcategory->type == "system") {

@@ -1239,6 +1239,9 @@ select {
 .-mb-px {
   margin-bottom: -1px;
 }
+.mt-7 {
+  margin-top: 1.75rem;
+}
 .box-border {
   box-sizing: border-box;
 }
@@ -1745,14 +1748,14 @@ select {
 .p-10 {
   padding: 2.5rem;
 }
-.p-2\.5 {
-  padding: 0.625rem;
-}
 .p-1\.5 {
   padding: 0.375rem;
 }
 .p-1 {
   padding: 0.25rem;
+}
+.p-2\.5 {
+  padding: 0.625rem;
 }
 .p-8 {
   padding: 2rem;
@@ -1862,11 +1865,11 @@ select {
 .pb-1 {
   padding-bottom: 0.25rem;
 }
-.pl-10 {
-  padding-left: 2.5rem;
-}
 .pl-4 {
   padding-left: 1rem;
+}
+.pl-10 {
+  padding-left: 2.5rem;
 }
 .pt-8 {
   padding-top: 2rem;

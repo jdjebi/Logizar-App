@@ -7,10 +7,11 @@ use App\Models\Category;
 use App\Models\OtherCategory;
 use App\Models\ProjectCategory;
 use Illuminate\Support\Str;
+use App\Models\Tag;
 
 class ProjectUpdateCategorization extends Component
 {
-    public $project; 
+    public $project;
 
     public $categories;
     public $categorySelectedId;
@@ -24,26 +25,36 @@ class ProjectUpdateCategorization extends Component
 
     protected $MAX_CATEGORY = 3;
 
+    public $tags;
+
     public $rules = [];
 
-    public function mount(){
+    protected $listeners = [
+        "tagsInputChanged" => "updateTags"
+    ];
+
+
+    public function mount()
+    {
         // Il faudra gérer le cas des Autres catégories identiques de nom
         $this->categories = Category::orderBy("name")->get();
-        $this->selectProjectCategories();   
+        $this->selectProjectCategories();
         $this->checkAddingCategory();
+        $this->getProjectTagsArray();
     }
 
-    public function addCategory(){  
-        if(!empty($this->categorySelectedId)){
-            if($this->categorySelectedId == "other"){
-                if(!empty($this->otherCategoryContent)){
+    public function addCategory()
+    {
+        if (!empty($this->categorySelectedId)) {
+            if ($this->categorySelectedId == "other") {
+                if (!empty($this->otherCategoryContent)) {
                     $otherCategory = new OtherCategory;
-                    $otherCategory->id = null; 
-                    $otherCategory->name = $this->otherCategoryContent; 
-                    $otherCategory->type = "other";              
+                    $otherCategory->id = null;
+                    $otherCategory->name = $this->otherCategoryContent;
+                    $otherCategory->type = "other";
                     $this->categoriesSelected[] = $otherCategory->toArray();
                 }
-            }else{
+            } else {
                 $category = $this->categories->find($this->categorySelectedId);
                 $this->categoriesSelected[] = $category->toArray();
                 $this->categoriesTabou[] = $category->id;
@@ -55,57 +66,86 @@ class ProjectUpdateCategorization extends Component
         }
     }
 
-    public function removeCategory($key){
-        $tkey = array_search($this->categoriesSelected[$key]["id"],$this->categoriesTabou);
+    public function removeCategory($key)
+    {
+        $tkey = array_search($this->categoriesSelected[$key]["id"], $this->categoriesTabou);
         unset($this->categoriesSelected[$key]);
-        if($tkey){
+        if ($tkey) {
             unset($this->categoriesTabou[$tkey]);
         }
         $this->categoriesSelected = array_values($this->categoriesSelected);
         $this->categoriesTabou = array_values($this->categoriesTabou);
-        if(count($this->categoriesSelected) == 2){
+        if (count($this->categoriesSelected) == 2) {
             $this->addCategoryDisabled = false;
         }
         $this->toggleFormEdited();
     }
 
-    public function toggleFormEdited(){
-        if(!$this->isFormEdited){
+    public function toggleFormEdited()
+    {
+        if (!$this->isFormEdited) {
             $this->isFormEdited = true;
-        }else{
-            $this->isFormEdited = false;   
+        } else {
+            $this->isFormEdited = false;
         }
     }
 
-    public function selectProjectCategories(){
-        foreach($this->project->categories() as $c){
+    public function selectProjectCategories()
+    {
+        foreach ($this->project->categories() as $c) {
             $this->categoriesSelected[] = $c->toArray();
-            if($c->type == "system"){
+            if ($c->type == "system") {
                 $this->categoriesTabou[] = $c->id;
             }
         }
     }
 
-    public function checkAddingCategory(){
-        if(count($this->categoriesSelected) == $this->MAX_CATEGORY){
+    public function checkAddingCategory()
+    {
+        if (count($this->categoriesSelected) == $this->MAX_CATEGORY) {
             $this->addCategoryDisabled = true;
-        }else{
+        } else {
             $this->addCategoryDisabled = false;
         }
     }
 
-    public function resetForm(){
+    public function getProjectTags()
+    {
+        return $this->project->tags;
+    }
+
+    public function getProjectTagsArray()
+    {
+        $tagsTmp = $this->getProjectTags()->toArray();
+        $this->tags = array_map(function ($t) {
+            return $t["name"];
+        }, $tagsTmp);
+    }
+
+    public function updateTags($tags)
+    {
+        $this->tags = $tags["data"];
+        $this->isFormEdited = true;
+    }
+
+    public function resetForm()
+    {
         $this->reset("categorySelectedId");
         $this->reset("categoriesSelected");
         $this->reset("otherCategoryContent");
         $this->reset("categoriesTabou");
         $this->selectProjectCategories();
         $this->checkAddingCategory();
+        $this->getProjectTagsArray();
+        $this->emit('tagsRefreshed', [
+            "data" =>  $this->tags
+        ]);
         $this->toggleFormEdited();
         $this->resetValidation();
     }
 
-    public function submit(){
+    public function submit()
+    {
         /*
             Le modèle de mise à jour des catégories est à revoir. 
             Pour mettre à jour on supprimer toute les précédentes catégories puis on les récréés.
@@ -125,11 +165,11 @@ class ProjectUpdateCategorization extends Component
         */
 
         $this->resetValidation();
-                   
-        if(count($this->categoriesSelected) == 0){
+
+        if (count($this->categoriesSelected) == 0) {
             $this->addError('categories.empty', 'Veuillez ajouter au moins une catégorie.');
-            foreach($this->categoriesSelected as $category){
-                if($category->type == "other" && !empty($category->name)){
+            foreach ($this->categoriesSelected as $category) {
+                if ($category->type == "other" && !empty($category->name)) {
                     $this->addError('categories.other.empty', 'Une catégorie autre ne possède pas de titre. Veuillez en ajouter une.');
                 }
             }
@@ -137,20 +177,20 @@ class ProjectUpdateCategorization extends Component
 
         $errors = $this->getErrorBag();
 
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
             return;
         }
 
         // Suppression de la catégorisation précédente
         $projectCategories = $this->project->projectCategories()->get();
-        foreach($projectCategories as $projectCategory){
+        foreach ($projectCategories as $projectCategory) {
             $projectCategory->delete();
         }
 
         // Enregistrement de la categorisation
-        foreach($this->categoriesSelected as $category){
+        foreach ($this->categoriesSelected as $category) {
 
-            if($category["type"] == "other"){
+            if ($category["type"] == "other") {
 
                 $otherCategory = new OtherCategory;
                 $otherCategory->name = $category["name"];
@@ -163,8 +203,7 @@ class ProjectUpdateCategorization extends Component
                 $projectCategory->category_id = $otherCategory->id;
                 $projectCategory->type = "other";
                 $projectCategory->save();
-
-            }else{
+            } else {
                 $id = $category["id"];
                 $projectCategory = new ProjectCategory;
                 $projectCategory->project_id = $this->project->id;
@@ -172,18 +211,30 @@ class ProjectUpdateCategorization extends Component
                 $projectCategory->type = "system";
                 $projectCategory->save();
             }
+        }
 
+        // Suppression des tags précédents
+        $tags = $this->getProjectTags();
+        foreach ($tags as $tag) {
+            $tag->delete();
+        }
+
+        // Enregistrement des nouveaus tags
+        foreach($this->tags as $t){
+            $tag = new Tag;
+            $tag->name = $t;
+            $tag->project_id = $this->project->id;
+            $tag->save();
         }
 
         $this->selectProjectCategories();
         $this->resetForm();
         $this->isFormEdited = false;
 
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=> "Catégories mises à jour !"
+        $this->dispatchBrowserEvent('alert', [
+            'type' => 'success',
+            'message' => "Catégories mises à jour !"
         ]);
-
     }
 
     public function render()

@@ -3,9 +3,10 @@
 namespace App\Http\Livewire\Projects\Update;
 
 use Livewire\Component;
-use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Models\Project;
+use App\Logizar\Project\ProjectStatusList;
 
 class ProjectUpdateInformations extends Component
 {
@@ -14,9 +15,12 @@ class ProjectUpdateInformations extends Component
     public $summary;
     public $project;
     public $code_name;
-
+    public $status;
+    
     public $baseUrl;
     public $codeNameIsUnique = true;
+
+    public $statusList;
 
     protected function rules(){
         return [
@@ -27,7 +31,8 @@ class ProjectUpdateInformations extends Component
                 'required', 
                 'max:45',
                 Rule::unique('projects')->ignore($this->project->id),
-            ]
+            ],
+            'status' => "required"
         ];
     }
 
@@ -37,7 +42,9 @@ class ProjectUpdateInformations extends Component
         $this->summary = $project->summary;
         $this->description = $project->description;
         $this->code_name = $project->code_name;
+        $this->status = $project->status;
         $this->baseUrl = route("project.show.bycodename", $this->code_name);
+        $this->statusList = ProjectStatusList::STATUS_LIST;
     }
 
     public function generateCodeName()
@@ -48,16 +55,12 @@ class ProjectUpdateInformations extends Component
             $this->code_name = Str::slug($this->name, ".");
         }
 
-        error_log("test");
-
         $this->checkCodeNameUnicity();
 
     }
 
     public function checkCodeNameUnicity()
     {
-        error_log("test");
-
         // Verifier si le code est unique
         $result = Project::where("code_name", $this->code_name)->where("code_name","!=",$this->project->code_name)->count();
         if ($result == 0) {
@@ -70,9 +73,6 @@ class ProjectUpdateInformations extends Component
                 $this->codeNameIsUnique = false;
             }
         }
-
-        error_log($this->codeNameIsUnique);
-
     }
 
     public function submit()
@@ -85,6 +85,7 @@ class ProjectUpdateInformations extends Component
         $this->project->description = $this->description;
         $this->project->summary = $this->summary;
         $this->project->code_name = $this->code_name;
+        $this->project->status = $this->status;
         $this->project->save();
 
         $this->dispatchBrowserEvent('alert', [
