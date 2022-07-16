@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\OtherCategory;
 use App\Models\ProjectCategory;
 use App\Models\ProjectType;
+use App\Models\ProjectDeliverable;
 use App\Models\Tag;
 use App\Logizar\Project\ProjectStatusList;
 
@@ -43,6 +44,7 @@ class ProjectCreateForm extends Component
 
     public $projectTypes = [];
     public $projectTypesList = [];
+    public $projectDeliverables = [];
 
     protected $rules = [
         'name' => 'required|max:30',
@@ -68,6 +70,7 @@ class ProjectCreateForm extends Component
 
         $this->categories = Category::orderBy("name")->get();
         $this->projectTypes = ProjectType::orderBy("name")->get();
+        $this->projectDeliverables = ProjectDeliverable::orderBy("name")->get();
         $this->projectStatusList = ProjectStatusList::STATUS_LIST;
 
         if (!empty($this->projectTypes)) {

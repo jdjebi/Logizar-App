@@ -149,6 +149,9 @@
                     <x-jet-label for="deliverable_id" value="Livrable*" />
                     <x-forms.select name="deliverable_id" class="block mt-1" wire:model='deliverable_id' :value="old('deliverable_id')">
                         <option value="">Sélectionnez un livrable</option>
+                        @foreach ($projectDeliverables as $deliverable)
+                            <option value="{{ $deliverable->id }}">{{ empty($deliverable->shortname) ? $deliverable->name : $deliverable->shortname }}</option>
+                        @endforeach
                         <option value="other">Autre</option>
                     </x-forms.select>
                 </div>
