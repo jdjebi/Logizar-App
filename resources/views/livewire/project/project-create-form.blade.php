@@ -55,7 +55,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="status" value="Statut du projet*" />
-                <x-forms.select name="status" class="block mt-1" :value="old('status')">
+                <x-forms.select name="status" class="block mt-1" wire:model="status" :value="old('status')">
                     @foreach ($projectStatusList as $status)
                         <option value="{{ $status["name"] }}">{{  $status["label"] }}</option>
                     @endforeach
