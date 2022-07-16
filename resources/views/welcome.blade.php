@@ -27,7 +27,7 @@
                     <span class="font-semibold text-lg">Récents</span>
                 </div>
                 <div>
-                    @livewire('projects.project-simple-card-list')
+                    @livewire('projects.project-complex-card-list')
                 </div>
             </div>
         </div>
