@@ -54,7 +54,8 @@ class ProjectCreateForm extends Component
         'type_id' => 'required',
         'deliverable_id' => 'required',
         'site_url' => 'nullable|url',
-        'repository_url' => 'nullable|url'
+        'repository_url' => 'nullable|url',
+        'is_opensource' => 'boolean'
     ];
 
     protected $listeners = [
