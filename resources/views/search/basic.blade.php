@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="search-content">
-       {{ $searchContent }} 
+        {{ $search_content }}
     </x-slot>
 
     <div class="px-4 my-2">
@@ -17,18 +17,17 @@
                 @livewire('menus.categorization.categorization-sidebar')
             </div>
             <div class="col-span-5 md:ml-3">
-                @if ($nbrResults == 0)
+                @if ($nbr_results == 0)
                     <div class="p-10 text-center">
                         <span class="text-lg semi-bold">Aucun résultat</span>
                     </div>
                 @else
                     <div class="mb-2">
-                        <span class="font-semibold text-lg">{{ $nbrResults }} @choice("Résultat|Résultats",$nbrResults)</span>
+                        <span class="font-semibold text-lg">{{ $nbr_results }} @choice('Résultat|Résultats', $nbr_results)</span>
                     </div>
-
                     <div>
-                        @livewire('projects.project-simple-card-empty-list',["projects" => $results])
-                    </div> 
+                        @livewire('projects.project-simple-card-empty-list', ['projects' => $results])
+                    </div>
                 @endif
             </div>
         </div>
