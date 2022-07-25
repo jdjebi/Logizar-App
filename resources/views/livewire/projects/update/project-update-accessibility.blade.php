@@ -9,17 +9,19 @@
     </x-slot>
 
     <x-slot name="form">
+
         <div class="col-span-6 sm:col-span-4">
             <div class="text-2xl font-semibold mb-4">Accéssibilité</div>
-            <x-jet-label for="site_url" value="Site web" />
-            <x-jet-input id="site_url" type="text" class="mt-1 block w-full" wire:model="site_url" />
-            <span class="text-sm text-gray-500">100 caractères au maximum.</span>
         </div>
+        
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="repository_url" value="Lien du dépôt" />
-            <x-jet-input id="repository_url" type="text" class="mt-1 block w-full" wire:model="repository_url" />
-            <span class="text-sm text-gray-500">100 caractères au maximum.</span>
+            <x-forms.inputs.label-input model="site_url" label="Site web" comment="100 caractères au maximum." class="w-full" />
         </div>
+        
+        <div class="col-span-6 sm:col-span-4">
+            <x-forms.inputs.label-input model="repository_url" label="Lien du dépôt" comment="100 caractères au maximum." class="w-full"/>
+        </div>
+
     </x-slot>
 
     <x-slot name="actions">
