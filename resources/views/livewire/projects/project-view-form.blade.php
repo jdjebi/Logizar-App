@@ -100,7 +100,7 @@
                     <span class="text-slate-700 text-sm">Posté le {{ $project->created_at->format('d/m/Y') }}</span>
                 </div>
                 <div class="mt-6">
-                    <div class="text-slate-700 text-md whitespace-pre-line">{!! $project->makeLinkClickable($project->description, 'text-blue-600 font-semibold hover:underline') !!}</div>
+                    <div class="text-slate-700 text-md whitespace-pre-line break-words">{!! $project->makeLinkClickable($project->description, 'text-blue-600 font-semibold hover:underline') !!}</div>
                 </div>
                 <div class="mt-5">
                     @foreach ($project->tags as $tag)
@@ -142,9 +142,11 @@
                         </div>
                         <div class="ml-5">
                             <div><span class="font-bold">Site web</span></div>
-                            <div><span class="text-gray-500">
+                            <div>
+                                <span class="text-gray-500">
                                     <a href="{{ $project->site_url }}">{{ $project->site_url }}</a>
-                                </span></div>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="flex text-md mt-5">
@@ -153,7 +155,11 @@
                         </div>
                         <div class="ml-5">
                             <div><span class="font-bold">Dépôt</span></div>
-                            <div><span class="text-gray-500">{{ $project->repository_url }}</span></div>
+                            <div>
+                                <span class="text-gray-500">
+                                    <a href="{{ $project->repository_url }}">{{ $project->repository_url }}</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="flex text-md mt-5">

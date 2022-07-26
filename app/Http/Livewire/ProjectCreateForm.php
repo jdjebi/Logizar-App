@@ -4,17 +4,16 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
+use Illuminate\Support\Str;
+
 use App\Models\Project;
-use App\Models\Category;
 use App\Models\OtherCategory;
 use App\Models\ProjectCategory;
 use App\Models\ProjectType;
 use App\Models\ProjectDeliverable;
 use App\Models\Tag;
 use App\Logizar\Project\ProjectStatusList;
-
-use Illuminate\Validation\Validator;
-use Illuminate\Support\Str;
 
 class ProjectCreateForm extends Component
 {
@@ -35,12 +34,7 @@ class ProjectCreateForm extends Component
     public $baseUrl;
     public $codeNameIsUnique = true;
 
-    public $categorySelectedId;
-    public $otherCategoryContent;
-    public $categoriesSelected = [];
-    public $categoriesTabou = [];
-    public $addCategoryDisabled = false;
-    protected $MAX_CATEGORY = 3;
+    public $categories_selected = [];
 
     public $projectTypes = [];
     public $projectTypesList = [];
@@ -59,7 +53,8 @@ class ProjectCreateForm extends Component
     ];
 
     protected $listeners = [
-        "tagsInputChanged" => "updateTags"
+        "tagsInputChanged" => "updateTags",
+        "categoriesUpdated" => "updateCategories"
     ];
 
     public function mount()
@@ -69,7 +64,6 @@ class ProjectCreateForm extends Component
             "code_name" => ""
         ]);
 
-        $this->categories = Category::orderBy("name")->get();
         $this->projectTypes = ProjectType::orderBy("name")->get();
         $this->projectDeliverables = ProjectDeliverable::orderBy("name")->get();
         $this->projectStatusList = ProjectStatusList::STATUS_LIST;
@@ -80,57 +74,6 @@ class ProjectCreateForm extends Component
 
         if (!empty($this->projectStatusList)) {
             $this->status = $this->projectStatusList["in_progress"]["name"];
-        }
-    }
-
-    public function addCategory()
-    {
-
-        if (!empty($this->categorySelectedId)) {
-
-            if ($this->categorySelectedId == "other") {
-                if (!empty($this->otherCategoryContent)) {
-                    $otherCategory = new OtherCategory;
-                    $otherCategory->id = null;
-                    $otherCategory->name = $this->otherCategoryContent;
-                    $otherCategory->type = "other";
-                    $this->categoriesSelected[] = $otherCategory->toArray();
-                }
-            } else {
-                $category = $this->categories->find($this->categorySelectedId);
-                $this->categoriesSelected[] = $category->toArray();
-                $this->categoriesTabou[] = $category->id;
-            }
-
-            if (count($this->categoriesSelected) == $this->MAX_CATEGORY) {
-                $this->addCategoryDisabled = true;
-            }
-
-            $this->reset("categorySelectedId");
-            $this->reset("otherCategoryContent");
-        }
-    }
-
-    public function updateTags($tags)
-    {
-        $this->tags = $tags["data"];
-    }
-
-    public function removeCategory($key)
-    {
-        $tkey = array_search($this->categoriesSelected[$key]["id"], $this->categoriesTabou);
-
-        unset($this->categoriesSelected[$key]);
-
-        if ($tkey) {
-            unset($this->categoriesTabou[$tkey]);
-        }
-
-        $this->categoriesSelected = array_values($this->categoriesSelected);
-        $this->categoriesTabou = array_values($this->categoriesTabou);
-
-        if (count($this->categoriesSelected) == 2) {
-            $this->addCategoryDisabled = false;
         }
     }
 
@@ -160,31 +103,40 @@ class ProjectCreateForm extends Component
         }
     }
 
+    public function updateTags($tags)
+    {
+        $this->tags = $tags["data"];
+    }
+
+    public function updateCategories($data)
+    {
+        $this->categories_selected = $data;
+    }
+
     public function submit()
     {
 
         /*
-            Cette methode de validation permet de valider les categories car elles ne sont pas champs du composant.
+            Cette methode de validation permet de valider les categories car elles ne sont pas des champs du composant.
             Leur validation est donc faite après la validation des champs. Ici on vérifie les axes suivant :
-
-            - Verifier qu'il y'a au moins une categorie
-            - Verification de la repetition d'une categorie
-            - Verifier que les catégories existent (sauf celle autre)
-            - Vérifier que la catégorie autre possède une description
-            - Vérifier la taille du nom des catégories, y compris celle de la catégorie autre
+            - [x] Verifier qu'il y'a au moins une categorie
+            - [] Verification de la repetition d'une categorie
+            - [] Verifier que les categories existent (sauf celle autre)
+            - [x] Verifier que la catégorie autre possède une description
+            - [] Verifier la longueur du nom de la catégorie autre si elle existe
         */
 
         $this->withValidator(function (Validator $validator) {
 
             $validator->after(function ($validator) {
 
-                if (count($this->categoriesSelected) == 0) {
+                if (count($this->categories_selected) == 0) {
 
                     $validator->errors()->add('categories.empty', 'Veuillez renseigner au moins une catégorie.');
 
-                    foreach ($this->categoriesSelected as $category) {
+                    foreach ($this->categories_selected as $category) {
 
-                        if ($category->type == "other" && !empty($category->name)) {
+                        if ($category["type"] == "other" && !empty($category["name"])) {
 
                             $validator->errors()->add('categories.other.empty', 'Une catégorie autre ne possède pas de titre. Veuillez en renseigner une.');
                         }
@@ -225,9 +177,9 @@ class ProjectCreateForm extends Component
         $project->save();
 
         // Enregistrement de la categorisation
-        foreach($this->categoriesSelected as $category){
+        foreach ($this->categories_selected as $category) {
 
-            if($category["type"] == "other"){
+            if ($category["type"] == "other") {
 
                 $otherCategory = new OtherCategory;
                 $otherCategory->name = $category["name"];
@@ -241,7 +193,7 @@ class ProjectCreateForm extends Component
                 $projectCategory->type = "other";
                 $projectCategory->save();
 
-            }else{
+            } else {
 
                 $id = $category["id"];
                 $projectCategory = new ProjectCategory;
@@ -251,23 +203,24 @@ class ProjectCreateForm extends Component
                 $projectCategory->save();
 
             }
-
+            
         }
 
         // Enregistrement des tags
-        foreach($this->tags as $t){
-            $tag = new Tag;
-            $tag->name = $t;
-            $tag->project_id = $project->id;
-            $tag->save();
+        if (!empty($this->tags)) {
+            foreach ($this->tags as $t) {
+                $tag = new Tag;
+                $tag->name = $t;
+                $tag->project_id = $project->id;
+                $tag->save();
+            }
         }
-        
+
         // Notification
         session()->flash('flash.banner', 'Projet créé !');
         session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route("project.show.bycodename",$project->code_name);
-
+        return redirect()->route("project.show.bycodename", $project->code_name);
     }
 
     public function render()
