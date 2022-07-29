@@ -2,23 +2,30 @@
 
 namespace App\Http\Livewire\Projects\Delete;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ProjectDeleteButton extends Component
 {
     public $project;
 
-    public $uiConfirmingUserDeletion = false;
+    public $ui_confirming_user_deletion = false;
 
-    public function delete(){     
-        $this->project->delete();
-        session()->flash('flash.banner', 'Projet supprimé');
-        session()->flash('flash.bannerStyle', 'success');
-        return redirect()->route("dashboard");
+    public function delete(){       
+        if(Auth::user()->id == $this->project->user_id){
+            session()->flash('flash.banner', 'Projet supprimé');
+            session()->flash('flash.bannerStyle', 'success');
+        }else{
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Action non autorisée"
+            ]);
+            $this->ui_confirming_user_deletion = false;
+        }
     }
 
     public function openConfirmDeletionModal(){
-        $this->uiConfirmingUserDeletion = true;
+        $this->ui_confirming_user_deletion = true;
     }
 
     public function render(){
