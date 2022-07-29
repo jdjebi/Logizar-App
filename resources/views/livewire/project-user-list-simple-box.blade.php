@@ -6,7 +6,7 @@
                     Aucun projet pour l'instant
                 </div>
                 <div class="mt-5">
-                    Exprimez vos idées librement ! L'expression est le pourquoi de l'existence de Logizar
+                    Exprimez vos idées !
                 </div>
                 <div class="mt-5">
                     <x-buttons.default href="{{ route('project.create') }}" class="text-lg">Créer un projet</x-buttons.default>
