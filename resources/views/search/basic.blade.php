@@ -22,11 +22,8 @@
                         <span class="text-lg semi-bold">Aucun résultat</span>
                     </div>
                 @else
-                    <div class="mb-2">
-                        <span class="font-semibold text-lg">{{ $nbr_results }} @choice('Résultat|Résultats', $nbr_results)</span>
-                    </div>
                     <div>
-                        @livewire('projects.project-simple-card-empty-list', ['projects' => $results])
+                        @livewire('projects.project-simple-card-empty-list', ['projects' => $results, 'show_counter' => true])
                     </div>
                 @endif
             </div>
