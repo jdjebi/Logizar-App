@@ -9,8 +9,9 @@
             </svg>
         </div>
         <form action="{{ route('search.results') }}" method="GET">
-            <input name="w" value="{{ (isset($_GET['w']) and request()->routeIs("search.results")) ? $_GET['w'] : '' }}" placeholder="Rechercher"
-                type="text" id="table-search"
+            <input name="w"
+                value="{{ (isset($_GET['w']) and request()->routeIs('search.results')) ? $_GET['w'] : '' }}"
+                placeholder="Rechercher" type="text" id="table-search"
                 {{ $attributes->merge(['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 pl-7 p-2']) }}>
             <button class="hidden" type="submit"></button>
         </form>
