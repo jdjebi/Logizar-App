@@ -3,13 +3,13 @@
 namespace App\Http\Livewire\Projects;
 
 use Livewire\Component;
-use App\Models\Project;
 
 class ProjectSimpleCardEmptyList extends Component
 {
 
     public $projects;
     public $projectsDefault;
+    public $show_counter = false;
 
     protected $listeners = [
         'projectsSelectedByCategorizationSidebar' => 'refreshProjects',
