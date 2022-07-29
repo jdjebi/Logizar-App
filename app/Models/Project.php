@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 use App\Logizar\Project\ProjectStatusList;
 
-use Error;
 
 class Project extends Model
 {
@@ -16,14 +17,25 @@ class Project extends Model
 
     protected $guarded = [];
 
-    public function statusFull()
+    protected function url(): Attribute
     {
-        if(isset(ProjectStatusList::STATUS_LIST[$this->status])){
-            $status = ProjectStatusList::STATUS_LIST[$this->status];
-        }else{
-            $status = null;
-        }
-        return $status;
+        return Attribute::make(
+            get: fn ($value, $attributes) => route('project.show.bycodename', $attributes["code_name"])
+        );
+    }
+
+    public function statusLabel(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                if (isset(ProjectStatusList::STATUS_LIST[$attributes['status']])) {
+                    $status = ProjectStatusList::STATUS_LIST[$attributes['status']]['label'];
+                } else {
+                    $status = null;
+                }
+                return $status;
+            }
+        );
     }
 
     public function user()
