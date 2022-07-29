@@ -5,7 +5,7 @@ $categories = $project->categories();
 <div class="box-border break-inside-avoid">
     <div id="pj-{{ $project->id }}"
         class="break-inside-avoid p-4 mb-3 border box-border border-slate-400 rounded hover:border-blue-500 hover:shadow focus:ring-blue-300 active:ring-blue-300 transition">
-        <a href="{{ !empty($project->code_name) ? route('project.show.bycodename', $project->code_name) : route('project.show.public', $project->id) }}">
+        <a href="{{ !empty($project->code_name) ? route('project.show.bycodename', $project->code_name) : route('project.show.byid', $project->id) }}">
             <div class="text-xl font-semibold">{{ $project->name }}</div>
             <div class="mt-1">
                 <span class="text-slate-500 text-sm">
@@ -21,7 +21,7 @@ $categories = $project->categories();
             </div>
             <div class="mt-3">
                 <div class="text-right">
-                    <x-buttons.light :href="!empty($project->code_name) ? route('project.show.bycodename', $project->code_name) : route('project.show.public', $project->id)" class="text-xs px-2 py-1">Afficher</x-buttons.light>
+                    <x-buttons.light :href="!empty($project->code_name) ? route('project.show.bycodename', $project->code_name) : route('project.show.byid', $project->id)" class="text-xs px-2 py-1">Afficher</x-buttons.light>
                 </div>
             </div>
         </a>

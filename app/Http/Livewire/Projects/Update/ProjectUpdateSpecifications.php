@@ -14,8 +14,8 @@ class ProjectUpdateSpecifications extends Component
     public $type_id;
     public $deliverable_id;
 
-    public $projectTypes = [];
-    public $projectDeliverables = [];
+    public $project_types = [];
+    public $project_deliverables = [];
 
     protected $rules = [
         'type_id' => 'required',
@@ -25,8 +25,8 @@ class ProjectUpdateSpecifications extends Component
 
     public function mount()
     {
-        $this->projectTypes = ProjectType::orderBy("name")->get();
-        $this->projectDeliverables = ProjectDeliverable::orderBy("name")->get();
+        $this->project_types = ProjectType::orderBy("name")->get();
+        $this->project_deliverables = ProjectDeliverable::orderBy("name")->get();
 
         $this->type_id = $this->project->type_id;
         $this->is_opensource = $this->project->is_opensource;

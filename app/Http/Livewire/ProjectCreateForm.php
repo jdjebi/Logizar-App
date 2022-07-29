@@ -220,7 +220,7 @@ class ProjectCreateForm extends Component
         session()->flash('flash.banner', 'Projet créé !');
         session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route("project.show.bycodename", $project->code_name);
+        return to_route("project.show.bycodename", $project->code_name);
     }
 
     public function render()

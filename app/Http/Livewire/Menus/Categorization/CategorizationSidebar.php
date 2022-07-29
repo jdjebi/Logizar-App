@@ -12,25 +12,25 @@ class CategorizationSidebar extends Component
 
     public $categoriesSelected = [];
 
-    protected $listeners = ['test3' => 'test3'];
-    
-    public function mount(){
+    public function mount()
+    {
         $this->categories = Category::orderBy("name")->get();
-        foreach($this->categories as $category){
+        foreach ($this->categories as $category) {
             $this->categoriesSelected[$category->id] = false;
         }
     }
 
-    public function toggleCategorySelection($categoryId){
+    public function toggleCategorySelection($categoryId)
+    {
         $this->categoriesSelected[$categoryId] = !$this->categoriesSelected[$categoryId];
         $this->getIdCategoriesSelected();
     }
 
-    public function getIdCategoriesSelected(){
-        $keys = array_keys($this->categoriesSelected,true);
-        $this->emit('projectsSelectedByCategorizationSidebar',[
+    public function getIdCategoriesSelected()
+    {
+        $keys = array_keys($this->categoriesSelected, true);
+        $this->emit('projectsSelectedByCategorizationSidebar', [
             "keys" => $keys,
-            "filter_in" => "all"
         ]);
     }
 

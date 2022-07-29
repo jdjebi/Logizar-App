@@ -9,10 +9,12 @@
 
     @guest
         <x-slot name="header">
-            <h2 class="text-2xl text-gray-800 font-bold">
-                Bienvenue
-            </h2>
-            <div>Sans pression, partagez vos projets avec la Bizar Community !</div>
+            <div class="text-center">
+                <h2 class="text-2xl text-gray-800 font-bold">
+                    Découvrez ce que font les développeurs de votre localité
+                </h2>
+                <div class="text-xs">Il y'a forcément une idée qui trotte dans votre esprit. N'hésitez plus et partager là !</div>
+            </div>
         </x-slot>
         <div class="mb-6"></div>
     @endguest

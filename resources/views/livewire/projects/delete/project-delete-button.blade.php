@@ -1,7 +1,7 @@
 <div>
-    <x-buttons.red wire:click='openConfirmDeletionModal' href="#delete">Supprimer</x-buttons.red>
+    <x-buttons.btn-red wire:click='openConfirmDeletionModal' href="#delete">Supprimer</x-buttons.btn-red>
 
-    <x-jet-confirmation-modal wire:model="uiConfirmingUserDeletion" maxWidth="md">
+    <x-jet-confirmation-modal wire:model="ui_confirming_user_deletion" maxWidth="md">
         <x-slot name="title">
             Supprimer projet
         </x-slot>
@@ -9,7 +9,7 @@
             Voulez-vous vraiment supprimer le projet ?
         </x-slot>
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('uiConfirmingUserDeletion')" wire:loading.attr="disabled">
+            <x-jet-secondary-button wire:click="$toggle('ui_confirming_user_deletion')" wire:loading.attr="disabled">
                 Annuler
             </x-jet-secondary-button>
     

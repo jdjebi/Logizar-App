@@ -6,12 +6,9 @@
                     <div>
                         <div class="text-3xl font-semibold">{{ $project->name }}</div>
                         @isset($project->code_name)
-                            @php
-                                $projectUrl = route('project.show.bycodename', $project->code_name);
-                            @endphp
                             <div>
-                                <a class="text-blue-600 text-xs font-bold hover:underline" href="{{ $projectUrl }}">
-                                    <span class="">{{ $projectUrl }}</span>
+                                <a class="text-blue-600 text-xs font-bold hover:underline" href="{{ $project->url }}">
+                                    <span class="">{{ $project->url }}</span>
                                 </a>
                             </div>
                         @endisset
@@ -26,8 +23,7 @@
                 </div>
                 <div>
                     <div class="mt-3 mb-5">
-                        <x-project.category.category-liner :categories="$project->categories()">
-                            </x-project>
+                        <x-project.category.category-liner :categories="$project->categories()"/>
                     </div>
                     <div>
                         <span class="text-gray-600">{{ $project->summary }}</span>
@@ -51,30 +47,30 @@
                         @switch("in_progress")
                             @case('in_progress')
                                 <x-badges.badge-default class="bg-blue-200 text-blue-800">
-                                    {{ $project->statusFull()['label'] }}
+                                    {{ $project->status_label }}
                                 </x-badges.badge-default>
                             @break
 
                             @case('pause')
                                 <x-badges.badge-default class="bg-gray-100 text-gray-800">
-                                    {{ $project->statusFull()['label'] }}
+                                    {{ $project->status_label }}
                                 </x-badges.badge-default>
                             @break
 
                             @case('ended')
                                 <x-badges.badge-default class="bg-green-100 text-green-800">
-                                    {{ $project->statusFull()['label'] }}
+                                    {{ $project->status_label }}
                                 </x-badges.badge-default>
                             @break
 
                             @case('abort')
                                 <x-badges.badge-default class="bg-red-100 text-red-800">
-                                    {{ $project->statusFull()['label'] }}
+                                    {{ $project->status_label }}
                                 </x-badges.badge-default>
                             @break
 
                             <x-badges.badge>
-                                {{ $project->statusFull()['label'] }}
+                                {{ $project->status_label }}
                             </x-badges.badge>
 
                             @default
@@ -102,7 +98,7 @@
                 <div class="mt-6">
                     <div class="text-slate-700 text-md whitespace-pre-line break-words">{!! $project->makeLinkClickable($project->description, 'text-blue-600 font-semibold hover:underline') !!}</div>
                 </div>
-                <div class="mt-5">
+                <div class="block mt-5 sm:hidden sm:mt-0">
                     @foreach ($project->tags as $tag)
                         <div class="inline-block px-5 py-1.5 border rounded-full mr-3 hover:bg-gray-100 cursor-pointer">
                             {{ $tag->name }}
