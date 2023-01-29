@@ -14,7 +14,7 @@
         @endforeach
     </div>
     <div class="flex items-center">
-        <x-forms.select name="category" class="block mt-1" wire:model="category_selected_id">
+        <x-forms.select name="category" class="block mt-1" wire:model="category_selected_id" wire:change="$emit('categorySelected')">
             <option value="">Sélectionnez une catégorie</option>
             @foreach ($categories as $category)
                 @if (!in_array($category->id, $categories_tabou))
@@ -24,12 +24,17 @@
             <option value="other">Autre</option>
         </x-forms.select>
         @if ($category_selected_id == 'other')
-            <x-jet-input id="other_category_content" class="block mt-1 w-full ml-3" type="text"
-                wire:model.defer="other_category_content" placeholder="Titre de la catégorie" />
+            <div>
+                <x-jet-input id="other_category_content" class="block mt-1 w-full ml-3" type="text"
+                    wire:model.defer="other_category_content" placeholder="Titre de la catégorie" />
+            </div>
         @endif
     </div>
-    <div class="mt-5">
-        <x-jet-button type="button" class="py-2 px-2.5" wire:click="addCategory" :disabled="$add_category_disabled">Ajouter
+    <div class="mt-5 flex items-center">
+        <x-jet-button type="button" class="py-2 px-2.5 mr-3" wire:click="addCategory" :disabled="$add_category_disabled">Ajouter
         </x-jet-button>
+        @if ($show_category_other_error == true && $category_selected_id == 'other')
+            <div class="text-red-600">Veuillez renseigner le nom de la catégorie.</div>
+        @endif
     </div>
 </div>

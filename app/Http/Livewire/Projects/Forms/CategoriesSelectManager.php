@@ -18,9 +18,11 @@ class CategoriesSelectManager extends Component
     public $other_category;
     public $other_category_content;
     public $add_category_disabled = false;
+    public $show_category_other_error = false;
 
     protected $listeners = [
         "categoriesSelectedRefreshed" => "updateCategoriesSelected",
+        "categorySelected" => "catchCategorySelected"
     ];
 
     public function mount()
@@ -42,11 +44,16 @@ class CategoriesSelectManager extends Component
     public function addCategory()
     {
         if (!empty($this->category_selected_id)) {
-            if ($this->category_selected_id == "other" and !empty($this->other_category_content)) {
-                $other_category = new OtherCategory;
-                $other_category->name = $this->other_category_content;
-                $other_category->type = "other";
-                $this->categories_selected[] = $other_category->toArray();
+            if ($this->category_selected_id == "other") {
+                if (!empty($this->other_category_content)){
+                    $other_category = new OtherCategory;
+                    $other_category->name = $this->other_category_content;
+                    $other_category->type = "other";
+                    $this->categories_selected[] = $other_category->toArray();
+                }else{
+                    $this->show_category_other_error = true;
+                    return;
+                }
             } else {
                 $category = $this->categories->find($this->category_selected_id);
                 $this->categories_selected[] = $category->toArray();
@@ -55,6 +62,7 @@ class CategoriesSelectManager extends Component
             if (count($this->categories_selected) == $this->MAX_CATEGORY) {
                 $this->add_category_disabled = true;
             }
+            $this->reset("show_category_other_error");
             $this->reset("category_selected_id");
             $this->reset("other_category_content");
             $this->emitCategoriesUpdated();
@@ -63,11 +71,13 @@ class CategoriesSelectManager extends Component
 
     public function removeCategory($key)
     {
-        $tkey = array_search($this->categories_selected[$key]["id"], $this->categories_tabou);
-        unset($this->categories_selected[$key]);
-        if ($tkey) {
-            unset($this->categories_tabou[$tkey]);
+        if($this->categories_selected[$key]['type']!='other'){
+            $tkey = array_search($this->categories_selected[$key]["id"], $this->categories_tabou);
+            if ($tkey>=0) {
+                unset($this->categories_tabou[$tkey]);
+            }
         }
+        unset($this->categories_selected[$key]);
         $this->categories_selected = array_values($this->categories_selected);
         $this->categories_tabou = array_values($this->categories_tabou);
         if (count($this->categories_selected) == $this->MAX_CATEGORY - 1) {
@@ -83,8 +93,13 @@ class CategoriesSelectManager extends Component
 
     public function updateCategoriesSelected($categories_selected)
     {
+        $this->reset("show_category_other_error");
         $this->categories_selected = $categories_selected["data"];
         $this->computeCategoryTabouList();
+    }
+
+    public function catchCategorySelected(){
+        $this->reset("show_category_other_error");
     }
 
     public function render()
