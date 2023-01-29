@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->enum("status", ['in_progress', 'pause', 'ended', 'abort'])->nullable();
+            $table->enum("status", ['in_progress', 'pause', 'ended', 'abort','none'])->nullable();
             $table->boolean("is_opensource")->default(false);
             $table->string("site_url", 100)->nullable();
             $table->string("repository_url", 100)->nullable();
