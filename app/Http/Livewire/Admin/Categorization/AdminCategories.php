@@ -29,6 +29,7 @@ class AdminCategories extends Component
     }
 
     public function openCreateModal(){
+        $this->reset("name");
         $this->resetValidation();
         $this->uiOpenCreateModal = true;
     }
