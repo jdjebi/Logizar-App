@@ -39,7 +39,7 @@
                     @foreach ($categories as $category)
                         <li>
                             <a href="javascript:void(0)"
-                                class="flex items-center p-2 text-xs  text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                class="flex items-center p-2 text-xs  text-gray-900 rounded-lg hover:bg-gray-100">
                                 <div class="flex items-center hover:cursor-pointer">
                                     <input wire:change='toggleCategorySelection({{ $category->id }})'
                                         id="checkbox-{{ $category->id }}" type="checkbox" value=""
@@ -57,10 +57,10 @@
             <div class="flex items-center mb-3">
                <span class="bg-orange-100 text-orange-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">Info</span>
             </div>
-            <p class="mb-3 text-sm text-blue-900 dark:text-blue-400">
+            <p class="mb-3 text-sm text-blue-900">
                 Logizar est un projet en open-source pour l'instant. Vous pouvez contribuer en toute en liberté.
             </p>
-            <a class="text-sm text-blue-900 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" href="https://github.com/jdjebi/Logizar-App">Contribuer au projet</a>
+            <a class="text-sm text-blue-900 underline hover:text-blue-800" href="https://github.com/jdjebi/Logizar-App">Contribuer au projet</a>
          </div>
     </aside>
 
