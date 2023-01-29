@@ -19,7 +19,7 @@
             </div>
 
             <div class="mt-4">
-                <x-forms.inputs.label-input model="summary" label="Résumé*" comment="70 caractères au maximum." class="w-full"/>
+                <x-forms.inputs.label-input model="summary" label="Résumé*" comment="100 caractères au maximum." class="w-full"/>
             </div>
 
             <div class="mt-4">
