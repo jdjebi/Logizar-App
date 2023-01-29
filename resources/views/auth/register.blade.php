@@ -55,7 +55,7 @@
                 </a>
 
                 <x-jet-button class="ml-4">
-                    {{ __("S'inscire") }}
+                    {{ __("S'inscrire") }}
                 </x-jet-button>
             </div>
         </form>
