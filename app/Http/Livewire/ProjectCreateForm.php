@@ -43,7 +43,7 @@ class ProjectCreateForm extends Component
     protected $rules = [
         'name' => 'required|max:30',
         'code_name' => 'required|regex:/^\w[-.\w]*\w$/|max:45|unique:projects',
-        'summary' => 'required|max:70',
+        'summary' => 'required|max:100',
         'description' => 'required',
         'type_id' => 'required',
         'deliverable_id' => 'required',
