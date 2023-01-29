@@ -10,10 +10,13 @@ class TagsInput extends Component
 
     public $tags = [];
 
+    public $nbrCount = 0;
+
+    const MAX_NBR_TAGS = 10;
+
     protected $listeners = [
         "tagsRefreshed" => "updateTagsFromEvent"
     ];
-
 
     public function mount()
     {
@@ -22,24 +25,30 @@ class TagsInput extends Component
 
     public function tagsInputUpdate()
     {
-
         $content = trim($this->tagsInput);
-
         $tagsTmp = explode(",", $content);
 
-        $tags = array_filter($tagsTmp, function ($t) {
-            return !ctype_space($t) and !empty($t);
-        });
+        $this->nbrCount = count($tagsTmp);
 
-        $tags = array_map(function ($t) {
-            return trim(strtolower($t));
-        }, $tags);
+        error_log($this->nbrCount);
 
-        $this->tags = $tags;
+        if($this->nbrCount <= TagsInput::MAX_NBR_TAGS){
 
-        $this->emit('tagsInputChanged', [
-            "data" => $tags
-        ]);
+            $tags = array_filter($tagsTmp, function ($t) {
+                return !ctype_space($t) and !empty($t);
+            });
+
+            $tags = array_map(function ($t) {
+                return trim(strtolower($t));
+            }, $tags);
+
+            $this->tags = $tags;
+            
+            $this->emit('tagsInputChanged', [
+                "data" => $tags
+            ]);
+        
+        }
     }
 
     public function updateTagsFromEvent($tags)
