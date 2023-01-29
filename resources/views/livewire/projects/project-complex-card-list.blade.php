@@ -12,7 +12,7 @@ $nbrProjects = count($projects)
 
 @else
 
-    <div class="columns-3xs">
+    <div class="lg:columns-3 md:columns-2">
         @foreach ($projects as $project)
             @livewire('projects.project-complex-card',["project" => $project],key($project->id))
         @endforeach

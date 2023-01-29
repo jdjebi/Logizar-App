@@ -1,6 +1,11 @@
 <div>
-    <div class="bg-zinc-50">
-        <div class="py-10 px-5 sm:px-10 md:px-28">
+    <div class="flex bg-zinc-50 px-5 sm:px-10 md:px-28 py-10">
+        <div class="mt-1 md:mr-10 mr-4">
+            <div class="md:project-logo sm:project-logo xs:project-logo">
+                <img src="{{ asset('imgs/projects/package.png') }}" alt="Logo projet {{ $project->name }}">
+            </div>
+        </div>
+        <div class="w-full">
             <div>
                 <div class="flex justify-between items-center">
                     <div>

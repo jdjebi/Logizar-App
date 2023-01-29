@@ -1,0 +1,67 @@
+/* Project logo */
+
+@media (max-width: 640px) {
+    .xs\:project-logo{
+        width: 40px;
+        height: 40px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .xs\:project-logo > img{
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 640px) {
+    .sm\:project-logo{
+        width: 80px;
+        height: 80px;
+        box-sizing: border-box;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .sm\:project-logo > img{
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .md\:project-logo{
+        width: 130px;
+        height: 130px;
+        box-sizing: border-box;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    .md\:project-logo > img{
+        width: 130px;
+        height: 130px;
+        border-radius: 10px;
+    }
+}
+
+.project-logo{
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.project-logo > img{
+    border-radius: 10px;
+    width: inherit;
+    height: inherit;
+}
+
+.project-logo.project-logo-60{
+    width: 70px;
+    height: 70px;
+}
+
+
