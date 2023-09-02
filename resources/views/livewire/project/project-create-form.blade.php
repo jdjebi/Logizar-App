@@ -23,7 +23,7 @@
             </div>
 
             <div class="mt-4">
-                <x-forms.inputs.label-textarea model="description" label="Description*" cols="30" rows="10"/>
+                <x-forms.inputs.label-textarea model="description" label="Description*" placeholder="Si vous n'avez pas d'idée parlez des fonctionnalités" cols="30" rows="10"/>
             </div>
 
             <div class="mt-4">
