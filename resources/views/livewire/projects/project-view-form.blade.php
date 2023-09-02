@@ -1,5 +1,6 @@
 <div>
-    <div class="flex bg-zinc-50 px-5 sm:px-10 md:px-28 py-10">
+
+    <div id="project-header" class="flex bg-zinc-50 px-5 sm:px-10 md:px-28 py-10">
         <div class="mt-1 md:mr-10 mr-4">
             <div class="md:project-logo sm:project-logo xs:project-logo">
                 <img src="{{ asset('imgs/projects/package.png') }}" alt="Logo projet {{ $project->name }}">
@@ -37,7 +38,7 @@
             </div>
             <div class="mt-4 flex justify-between items-center">
                 <div>
-                    <span class="text-sm text-blue-500">Par {{ $project->user->name }}</span>
+                    <span class="text-sm text-blue-500">Par {{ $project->user->name }} </span>
                 </div>
                 <div>
                     <x-badges.badge-default class="bg-cyan-100 text-cyan-800">
@@ -90,7 +91,7 @@
         </div>
     </div>
 
-    <div class="py-5 px-5 sm:px-10 md:px-28">
+    <div id="project-body" class="py-5 px-5 sm:px-10 md:px-28">
         <div class="grid grid-cols-1 md:grid-cols-6 md:gap-10">
 
             <div class="md:col-span-4">
@@ -190,3 +191,5 @@
 
         </div>
     </div>
+
+</div>
